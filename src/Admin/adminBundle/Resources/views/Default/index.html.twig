@@ -1,3 +1,218 @@
+{% extends '::base.html.twig' %}
+
+{% block title %} Hi Map!{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/admin/css/main.css') }}" rel="stylesheet" />
+{% endblock %}
 
 
-<h1>Hello {{ name }}!</h1>
+{% block body %}
+        <div id="subHeader">
+            <h1 id="logo">Hello {{ name }}!</h1>
+        </div>
+
+        <div id="subhCanvas"></div>
+{% endblock %}
+
+{% block javascripts %}
+  <script src="//maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDuOqt039hnY8o2L6IuCNCCZ27QFh2TbjY"></script>
+  <script src="{{ asset('bundles/admin/js/infobox.js') }}"></script>
+
+  <script>
+    var subh = jQuery;
+    subh(document).ready(function(){
+
+    });
+
+    function initialize() {
+        var styleMap = [
+            {
+                "featureType": "water",
+                "elementType": "all",
+                "stylers": [
+                    { "hue": "#e9ebed" },
+                    { "saturation": -78 },
+                    { "lightness": 67 },
+                    { "visibility": "simplified" }
+                ]
+            },
+            {
+                "featureType": "landscape",
+                "elementType": "all",
+                "stylers": [
+                    { "hue": "#f5f5f5" },
+                    { "saturation": -100 },
+                    { "lightness": 100 },
+                    { "visibility": "simplified" }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "geometry",
+                "stylers": [
+                    { "hue": "#bbc0c4" },
+                    { "saturation": -93 },
+                    { "lightness": 31 },
+                    { "visibility": "simplified" }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "all",
+                "stylers": [
+                    { "hue": "#f5f5f5" },
+                    { "saturation": -100 },
+                    { "lightness": 100 },
+                    { "visibility": "off" }
+                ]
+            },
+            {
+                "featureType": "road.local",
+                "elementType": "geometry",
+                "stylers": [
+                    { "hue": "#e9ebed" },
+                    { "saturation": -90 },
+                    { "lightness": 5 },
+                    { "visibility": "simplified" }
+                ]
+            },
+            {
+                "featureType": "transit",
+                "elementType": "all",
+                "stylers": [
+                    { "hue": "#e9ebed" },
+                    { "saturation": 10 },
+                    { "lightness": 69 },
+                    { "visibility": "on" }
+                ]
+            },
+            {
+                "featureType": "administrative.locality",
+                "elementType": "all",
+                "stylers": [
+                    { "hue": "#2ecc71" },
+                    { "saturation": 40 },
+                    { "lightness": 35 },
+                    { "visibility": "on" }
+                ]
+            },
+            {
+                "featureType": "road",
+                "elementType": "labels",
+                "stylers": [
+                    { "hue": "#bbc0c4" },
+                    { "saturation": -93 },
+                    { "lightness": 31 },
+                    { "visibility": "on" }
+                ]
+            },
+            {
+                "featureType": "road.arterial",
+                "elementType": "labels",
+                "stylers": [
+                    { "hue": "#bbc0c4" },
+                    { "saturation": -93 },
+                    { "lightness": 5 },
+                    { "visibility": "simplified" }
+                ]
+            }
+        ];
+
+        var myOptions = {
+            zoom: 13,
+            center: new google.maps.LatLng(44.432380, 26.103541),
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            styles: styleMap
+        };
+
+        var map = new google.maps.Map(document.getElementById('subhCanvas'), myOptions);
+
+        setMarkers(map, shops);
+
+    } /* end of initialize() */
+
+    /** Data for the markers consisting of a name, a LatLng and a zIndex for
+     * the order in which these markers should display on top of each
+     * other.*/
+    var shops = [
+        ['Balta Alba', 44.460238, 26.064904, 7, 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'],
+        ['Croitoreasa SA', 44.409002, 26.157430, 8, 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'],
+        ['Tricubalba', 44.429967, 26.131166, 9, 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'],
+        ['Alin si Diana SA', 44.423470, 26.066449, 8, 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'],
+        ['Maroubra Shop', 44.435525, 26.116903, 11, 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'],
+        ['Zorro Shop', 44.436689, 26.097420, 11, 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'],
+        ['Superman Shop', 44.439140, 26.127632, 11, 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'],
+        ['Petre Ispirescu 21', 44.412292, 26.067293, 11, 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'],
+        ['Calea Văcărești 276', 44.409956, 26.117687, 11, 'Descrierea acestui magazin consta in faptul ca este foarte primitor.']
+    ];
+
+    function setMarkers(map, locations) {
+        // Add markers to the map
+
+        var image = {
+            url: 'http://localhost/symfony/web/bundles/admin/images/marker.png',
+            size: new google.maps.Size(30, 30),
+            origin: new google.maps.Point(0,0),
+            anchor: new google.maps.Point(0, 32)
+        };
+
+        var shape = {
+            coords: [1, 1, 1, 23, 20, 23, 20 , 1],
+            type: 'poly'
+        };
+        var iBoxOpts = {
+            content: content,
+            disableAutoPan: false,
+            maxWidth: 0,
+            pixelOffset: new google.maps.Size(-140, 0),
+            boxStyle: {},
+            closeBoxMargin: "5px 0 2px 2px",
+            closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
+            infoBoxClearance: new google.maps.Size(1, 1),
+            isHidden: false,
+            pane: "floatPane",
+            enableEventPropagation: false,
+            zIndex: null,
+            boxClass: "infoSH"
+        };
+
+        for (var i = 0; i < locations.length; i++) {
+            var shopx = locations[i];
+            var myLatLng = new google.maps.LatLng(shopx[1], shopx[2]);
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                icon: image,
+                shape: shape,
+                title: shopx[0],
+                desc: shopx[4],
+                id: "shopInfo"+i,
+                zIndex: shopx[3],
+                ib: new InfoBox(iBoxOpts)
+            });
+
+            var content = "<div class='cArrow'></div><div id='"+marker.id+"'><h3> " + marker.title +  "</h3><p>" + marker.desc + "</p></div>";
+
+
+            // Add listener for a click on the pin
+            google.maps.event.addListener( marker , 'click' , (function(marker, content){
+                return function() {
+
+                    if(typeof lastIb != 'undefined')  lastIb.close();
+
+                    marker.ib.setContent(content);
+                    marker.ib.open(map, marker);
+                    console.log('clicked....');
+                    lastIb = marker.ib;
+                };
+            })(marker, content));
+
+        }/* end for() */
+
+    } /* end of setMarkers */
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+  </script>
+{% endblock %}
+
