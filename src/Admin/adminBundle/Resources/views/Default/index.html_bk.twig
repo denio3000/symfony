@@ -8,102 +8,30 @@
 
 
 {% block body %}
-    <div id="subHeader">
-        <h1 id="logo">Hello {{ name }}!</h1>
-    </div>
+        <div id="subHeader">
+            <h1 id="logo">Hello {{ name }}!</h1>
+        </div>
 
-    <div id="subhCanvas"></div>
+        <div id="subhCanvas"></div>
 {% endblock %}
 
 {% block javascripts %}
-    <script src="//maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDuOqt039hnY8o2L6IuCNCCZ27QFh2TbjY"></script>
-    <script src="{{ asset('bundles/admin/js/infobox.js') }}"></script>
+  <script src="//maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDuOqt039hnY8o2L6IuCNCCZ27QFh2TbjY"></script>
+  <script src="{{ asset('bundles/admin/js/infobox.js') }}"></script>
 
 <script>
+    var subh = jQuery;
+    subh(document).ready(function(){
+    });
 
     /** Data for the markers consisting of a name, a LatLng and a zIndex for
      * the order in which these markers should display on top of each
      * other.*/
-    var shops = [
-        {
-            id: '1',
-            title: 'Balta Alba',
-            lat: 44.460238,
-            long: 26.064904,
-            desc: 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'
-        },
-        {
-            id: '2',
-            title: 'Croitoreasa SA',
-            lat: 44.409002,
-            long: 26.157430,
-            desc: 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'
-        },
-        {
-            id: '3',
-            title: 'Tricubalba',
-            lat: 44.429967,
-            long: 26.131166,
-            desc: 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'
-        },
-        {
-            id: '4',
-            title: 'Alin si Diana SA',
-            lat: 44.423470,
-            long: 26.066449,
-            desc: 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'
-        },
-        {
-            id: '5',
-            title: 'Petre Ispirescu 21',
-            lat: 44.412292,
-            long: 26.067293,
-            desc: 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'
-        },
-        {
-            id: '6',
-            title: 'Calea Văcărești 276',
-            lat: 44.409956,
-            long: 26.117687,
-            desc: 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'
-        },
-        {
-            id: '7',
-            title: 'Superman Shop',
-            lat: 44.439140,
-            long: 26.127632,
-            desc: 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'
-        },
-        {
-            id: '8',
-            title: 'Zorro Shop',
-            lat: 44.436689,
-            long: 26.097420,
-            desc: 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'
-        },
-        {
-            id: '9',
-            title: 'Maroubra Shop',
-            lat: 44.435525,
-            long:  26.116903,
-            desc: 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'
-        },
-        {
-            id: '9',
-            title: 'Stefan cel Mic',
-            lat: 44.453295,
-            long:  26.107131,
-            desc: 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'
-        }
-    ];
-
-
-
 
     /* Get Content for fresh opened boxy Shop on map */
-    function getContentBox(key){
-        console.log(key);
-        return "<div class='cArrow'></div><div id='shopInfo" + shops[key].id+"'><h3> " + shops[key].title +  "</h3><p>" + shops[key].desc + "</p></div>";
+    function getContentBox(id){
+        console.log(id);
+        return "<div class='cArrow'></div><div id='shopInfo" + id+"'><h3> " + shops.title[id] +  "</h3><p>" + shops.desc[id] + "</p></div>";
     }
 
     /* Style of map in this object */
@@ -200,12 +128,39 @@
         }
     ];
 
+
     var startLat = 44.432380;
     var startLong =  26.103541;
 
 
     /* Initialize the map  on load page */
-    function initializeM(shops) {
+    function initializeM() {
+
+
+        var shops = [
+            {
+                id: '1',
+                title: 'Balta Alba',
+                long: 44.460238,
+                lat:  26.064904,
+                desc: 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'
+            },
+            {
+                id: '2',
+                title: 'Croitoreasa SA',
+                long: 44.409002,
+                lat:  26.157430,
+                desc: 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'
+            },
+            {
+                id: '3',
+                title: 'Tricubalba',
+                long: 44.429967,
+                lat:  26.131166,
+                desc: 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'
+            }
+        ];
+
 
         /* Option configuration of map initialize */
         var mapOpts = {
@@ -267,23 +222,25 @@
                 position: myLatLng,
                 map: map,
                 id: shopx.id,
-                key: i,
                 icon: iconMarker,
                 shape: shapeMarker,
                 zIndex: 100,
                 ib: infoBoxObj
             });
+            console.log(marker);
 
             // Add listener for a click on the pin
             google.maps.event.addListener( marker , 'click' , (function(marker){
                 return function() {
-                if(typeof lastIb != 'undefined')  lastIb.close();
 
-                    c = getContentBox(marker.key);
+                    if(typeof lastIb != 'undefined')  lastIb.close();
+
+                    c = getContentBox(marker.id);
                     marker.ib.setContent(c);
                     marker.ib.open(map, marker);
                     lastIb = marker.ib;
 
+                    console.log('clicked....');
                 };
             })(marker));
 
@@ -291,7 +248,7 @@
 
     } /* end of setMarkers */
 
-    google.maps.event.addDomListener(window, 'load', initializeM(shops));
-    </script>
+    google.maps.event.addDomListener(window, 'load', initializeM);
+  </script>
 {% endblock %}
 
