@@ -1,4 +1,4 @@
-admin:
-    resource: "@adminBundle/Resources/config/routing.yml"
+shmap:
+    resource: "@shmapBundle/Resources/config/routing.yml"
     prefix:   /
 

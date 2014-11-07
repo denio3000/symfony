@@ -1,0 +1,30 @@
+Shmap\shmapBundle\Entity\SubhUsers:
+    type: entity
+    table: subh_users
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        username:
+            type: string
+            nullable: true
+            length: 30
+            fixed: false
+            comment: ''
+        name:
+            type: string
+            nullable: true
+            length: 50
+            fixed: false
+            comment: ''
+        created:
+            type: datetime
+            nullable: true
+            comment: ''
+    lifecycleCallbacks: {  }

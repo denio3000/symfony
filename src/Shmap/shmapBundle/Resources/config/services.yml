@@ -1,4 +1,4 @@
 services:
-#    admin.example:
-#        class: Admin\adminBundle\Example
+#    shmap.example:
+#        class: Shmap\shmapBundle\Example
 #        arguments: [@service_id, "plain_value", %parameter%]

@@ -3,7 +3,7 @@
 {% block title %} Hi Map!{% endblock %}
 
 {% block stylesheets %}
-    <link href="{{ asset('bundles/admin/css/main.css') }}" rel="stylesheet" />
+    <link href="{{ asset('bundles/shmap/css/main.css') }}" rel="stylesheet" />
 {% endblock %}
 
 
@@ -17,13 +17,10 @@
 
 {% block javascripts %}
     <script src="//maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyDuOqt039hnY8o2L6IuCNCCZ27QFh2TbjY"></script>
-    <script src="{{ asset('bundles/admin/js/infobox.js') }}"></script>
+    <script src="{{ asset('bundles/shmap/js/infobox.js') }}"></script>
 
 <script>
-
-    /** Data for the markers consisting of a name, a LatLng and a zIndex for
-     * the order in which these markers should display on top of each
-     * other.*/
+    var localpath = 'http://localhost/symfony';
     var shops = [
         {
             id: '1',
@@ -89,7 +86,7 @@
             desc: 'Descrierea acestui magazin consta in faptul ca este foarte primitor.'
         },
         {
-            id: '9',
+            id: '10',
             title: 'Stefan cel Mic',
             lat: 44.453295,
             long:  26.107131,
@@ -97,13 +94,37 @@
         }
     ];
 
-
-
-
     /* Get Content for fresh opened boxy Shop on map */
     function getContentBox(key){
-        console.log(key);
-        return "<div class='cArrow'></div><div id='shopInfo" + shops[key].id+"'><h3> " + shops[key].title +  "</h3><p>" + shops[key].desc + "</p></div>";
+        return "" +
+        "<div class='cArrow'></div>" +
+        "<div id='shopInfo" + shops[key].id+"'>" +
+            "<div class='containerThumb'><img class='thumbSH' src='"+localpath+"/web/images/shops/1/shop_avatar.jpg' title='" + shops[key].title + "'></div>"+
+            "<h3> " + shops[key].title +  "</h3>" +
+            "<p>" + shops[key].desc + "</p>" +
+        "</div>";
+
+        $.ajax({
+            type: "POST",
+            url: localpath + 'shops/getQ',
+            data: dataX,
+            contentType: "application/json",
+            cache: false,
+            async: true,
+            beforeSend: function(){
+                Q.startLoad();
+            },
+            success: function (r) {
+
+                //console.log(r);
+                Q.endLoad();
+                var s = JSON.parse(r);
+                Q.updateContent(s);
+                $('.sissiAnswer.active').removeClass('active');
+                $('#curentQ').html(Q.curent);
+                Q.curent++;
+            }
+        });
     }
 
     /* Style of map in this object */
@@ -224,11 +245,11 @@
         setMarkers(map, shops);
     } /* end of initializeM() */
 
-    function setMarkers(map, locations) {
+    function setMarkers(map, shops) {
 
         // Add markers to the map
         var iconMarker = {
-            url: 'http://localhost/symfony/web/bundles/admin/images/marker.png',
+            url: localpath+ '/web/bundles/shmap/images/marker.png',
             size: new google.maps.Size(30, 30),
             origin: new google.maps.Point(0,0),
             anchor: new google.maps.Point(0, 32)
@@ -246,8 +267,8 @@
             maxWidth: 0,
             pixelOffset: new google.maps.Size(-140, 0),
             boxStyle: {},
-            closeBoxMargin: "5px 0 2px 2px",
-            closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
+            closeBoxMargin: "3px 2px 0 0",
+            closeBoxURL: localpath+ '/web/bundles/shmap/images/close.png',
             infoBoxClearance: new google.maps.Size(1, 1),
             isHidden: false,
             pane: "floatPane",
@@ -260,8 +281,9 @@
         infoBoxObj = new InfoBox(infoBoxObj);
 
 
-        for (var i = 0; i < locations.length; i++) {
-            var shopx = locations[i];
+        for (var i = 0; i < shops.length; i++) {
+
+            var shopx = shops[i];
             var myLatLng = new google.maps.LatLng(shopx.lat, shopx.long);
             var marker = new google.maps.Marker({
                 position: myLatLng,
@@ -287,7 +309,7 @@
                 };
             })(marker));
 
-        }/* end for() */
+        } /* end for() */
 
     } /* end of setMarkers */
 

@@ -1,0 +1,7 @@
+shmap_homepage:
+    path:     /shmap/{name}
+    defaults: { _controller: shmapBundle:Default:index }
+
+get_shop_details:
+    path:     /getshopdetails/{id}
+    defaults: { _controller: shmapBundle:Initialize:getShopDetails }
