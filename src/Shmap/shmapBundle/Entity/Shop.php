@@ -12,25 +12,65 @@ class Shop
     /**
      * @var integer
      */
-    private $id;
+    public $id;
 
     /**
      * @var string
      */
-    private $title;
+    public $title;
 
     /**
      * @var string
      */
-    private $description;
+    public $description;
+
+    /**
+     * @var string
+     */
+    public $avatar;
 
     /**
      * @var integer
      */
-    private $visits;
-
+    public $visits;
 
     /**
+     * @var string
+     */
+    public $latlong;
+
+    /**
+     * @var int
+     */
+    public $creator_id;
+
+    /**
+     * @var int
+     */
+    public $premium_id;
+
+    /**
+     * @var string
+     */
+    public $address;
+
+    /**
+     * @var string
+     */
+    public $cat;
+
+    /**
+     * @var string
+     */
+    public $created;
+
+    /**
+     * @var string
+     */
+    public $city;
+
+
+    /*******************
      * Get id
      *
      * @return integer 
