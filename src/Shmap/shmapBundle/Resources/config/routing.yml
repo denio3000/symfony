@@ -5,3 +5,7 @@ shmap_homepage:
 get_shop_details:
     path:     /getshopdetails/{id}
     defaults: { _controller: shmapBundle:Initialize:getShopDetails }
+
+get_shop_list:
+    path:     /getshoplist/{category}
+    defaults: { _controller: shmapBundle:Initialize:getShopList }

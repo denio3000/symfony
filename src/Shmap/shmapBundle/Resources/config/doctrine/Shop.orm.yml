@@ -13,19 +13,64 @@ Shmap\shmapBundle\Entity\Shop:
     fields:
         title:
             type: string
-            nullable: false
+            nullable: true
             length: 70
             fixed: false
             comment: ''
         description:
             type: text
-            nullable: false
+            nullable: true
             length: null
+            fixed: false
+            comment: ''
+        avatar:
+            type: string
+            nullable: true
+            length: 50
             fixed: false
             comment: ''
         visits:
             type: integer
             nullable: false
             unsigned: false
+            comment: ''
+        latlong:
+            type: string
+            nullable: true
+            length: 50
+            fixed: false
+            comment: ''
+        creator_id:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: ''
+            column: creator_id
+        premium_id:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: ''
+        address:
+            type: string
+            nullable: true
+            length: 50
+            fixed: false
+            comment: ''
+        category:
+            type: string
+            nullable: true
+            length: 30
+            fixed: false
+            comment: ''
+        city:
+            type: string
+            nullable: true
+            length: 30
+            fixed: false
+            comment: ''
+        created:
+            type: datetime
+            nullable: true
             comment: ''
     lifecycleCallbacks: {  }

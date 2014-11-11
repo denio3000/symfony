@@ -46,13 +46,13 @@ Shmap\shmapBundle\Entity\SubshShops:
             length: 50
             fixed: false
             comment: ''
-        creatorId:
+        creator_id:
             type: integer
             nullable: true
             unsigned: false
             comment: ''
             column: creator_id
-        premium:
+        premium_id:
             type: integer
             nullable: true
             unsigned: false
@@ -63,14 +63,7 @@ Shmap\shmapBundle\Entity\SubshShops:
             length: 50
             fixed: false
             comment: ''
-        newStock:
-            type: string
-            nullable: true
-            length: 30
-            fixed: false
-            comment: ''
-            column: new_stock
-        cat:
+        category:
             type: string
             nullable: true
             length: 30

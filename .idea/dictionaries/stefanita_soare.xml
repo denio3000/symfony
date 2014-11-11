@@ -2,6 +2,7 @@
   <dictionary name="stefanita.soare">
     <words>
       <w>getshopdetails</w>
+      <w>getshoplist</w>
       <w>latlong</w>
       <w>lume</w>
       <w>stylers</w>

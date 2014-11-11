@@ -57,7 +57,7 @@ class Shop
     /**
      * @var string
      */
-    public $cat;
+    public $category;
 
     /**
      * @var string

@@ -7,12 +7,74 @@ Shmap\shmapBundle\Entity\Shop:
             id: true
             generator:
                 strategy: AUTO
-    fields:
-        title:
-            type: string
-            length: '70'
-        description:
-            type: text
-        visits:
-            type: integer
+        fields:
+            title:
+                type: string
+                nullable: true
+                length: 70
+                fixed: false
+                comment: ''
+            description:
+                type: text
+                nullable: true
+                length: null
+                fixed: false
+                comment: ''
+            avatar:
+                type: string
+                nullable: true
+                length: 50
+                fixed: false
+                comment: ''
+            visits:
+                type: integer
+                nullable: false
+                unsigned: false
+                comment: ''
+            latlong:
+                type: string
+                nullable: true
+                length: 50
+                fixed: false
+                comment: ''
+            creatorId:
+                type: integer
+                nullable: true
+                unsigned: false
+                comment: ''
+                column: creator_id
+            premium:
+                type: integer
+                nullable: true
+                unsigned: false
+                comment: ''
+            address:
+                type: string
+                nullable: true
+                length: 50
+                fixed: false
+                comment: ''
+            newStock:
+                type: string
+                nullable: true
+                length: 30
+                fixed: false
+                comment: ''
+                column: new_stock
+            cat:
+                type: string
+                nullable: true
+                length: 30
+                fixed: false
+                comment: ''
+            city:
+                type: string
+                nullable: true
+                length: 30
+                fixed: false
+                comment: ''
+            created:
+                type: datetime
+                nullable: true
+                comment: ''
     lifecycleCallbacks: {  }

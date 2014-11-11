@@ -7,6 +7,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller,
 
 class InitializeController extends Controller
 {
+
+    /**
+    * Get all list
+    * @param $id
+    * @return JsonResponse
+    */
+    public function getShopListAction($category = null)
+    {
+        if($category != null){
+            $shops = $this->getDoctrine()
+                ->getRepository('shmapBundle:Shop')
+                ->findByCategory($category);
+        }
+
+        if (!$shops) {
+            throw $this->createNotFoundException(
+                'No product found for cat '.$category
+            );
+        }
+
+        return new JsonResponse(array('shops' => $shops));
+    }
+
+    /**
+     * Get by #id
+     * @param $id
+     * @return JsonResponse
+     */
     public function getShopDetailsAction($id)
     {
 
